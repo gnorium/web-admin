@@ -78,7 +78,7 @@ public struct LoginView: HTML {
 						marginBottom(spacing32)
 					}
 
-					ButtonView(label: "Sign In", action: .progressive, weight: .primary, type: .submit, fullWidth: true)
+					ButtonView(label: "Sign In", action: .progressive, weight: .primary, size: .large, type: .submit, fullWidth: true)
 
 					div {
                         a { "← Back to Site" }
