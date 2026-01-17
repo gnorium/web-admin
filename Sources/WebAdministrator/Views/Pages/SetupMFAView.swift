@@ -7,14 +7,14 @@ import WebComponents
 import WebTypes
 
 /// MFA Setup View with QR code for authenticator app configuration
-/// Uses modern DSL patterns: lowercase tags, inline styles, design tokens
+/// Uses LayoutView for consistent admin panel structure
 public struct SetupMFAView: HTML {
 	public let secret: String
 	public let otpauthURL: String
 	public let accountName: String
 	public let issuer: String
 
-	public init(secret: String, otpauthURL: String, accountName: String, issuer: String = "Madhavik") {
+	public init(secret: String, otpauthURL: String, accountName: String, issuer: String = "Gnorium") {
 		self.secret = secret
 		self.otpauthURL = otpauthURL
 		self.accountName = accountName
@@ -22,31 +22,22 @@ public struct SetupMFAView: HTML {
 	}
 
 	public func render(indent: Int = 0) -> String {
-		html {
-			head {
-				title { "MFA Setup | Administration" }
-				meta().charset(.UTF8)
-				meta().name(.viewport).content("width=device-width, initial-scale=1")
+		LayoutView(siteName: "Setup MFA", username: accountName) {
+			div {
+				setupCard
 			}
-			body {
-				div {
-					setupCard
-				}
-				.class("setup-container")
-				.data("otpauth-url", otpauthURL)
-				.style { containerCSS() }
-
-				// QR Code library (loaded by hydration)
-				script()
-					.src("https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js")
-			}
+			.class("setup-container")
+			.data("otpauth-url", otpauthURL)
 			.style {
-				margin(0)
-				padding(0)
-				backgroundColor(backgroundColorBase)
-				fontFamily(typographyFontSans)
-				color(colorBase)
+				display(.flex)
+				justifyContent(.center)
+				alignItems(.center)
+				padding(spacing32)
 			}
+
+			// QR Code library (hydrated by WASM)
+			script()
+				.src("https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js")
 		}
 		.render(indent: indent)
 	}
@@ -57,7 +48,7 @@ public struct SetupMFAView: HTML {
 			h1 { "Secure Your Account" }
 				.style { titleCSS() }
 
-			p { "Multi-factor authentication (MFA) adds an extra layer of security to your administrator account." }
+			p { "Multi-factor authentication (MFA) adds an extra layer of security to your admin account." }
 				.style { subtitleCSS() }
 
 			setupContent
@@ -72,7 +63,7 @@ public struct SetupMFAView: HTML {
 		div {
 			// QR Code and Instructions Grid
 			div {
-				// QR Code
+				// QR Code (generated client-side)
 				div {
 					div()
 						.id("qrcode")
@@ -134,7 +125,7 @@ public struct SetupMFAView: HTML {
 						.style { enableButtonCSS() }
 				}
 				.method(.post)
-				.action("/administrator/mfa/setup")
+				.action("/admin/mfa/setup")
 			}
 			.style { verifySectionCSS() }
 		}
@@ -144,7 +135,7 @@ public struct SetupMFAView: HTML {
 	private var setupFooter: [HTML] {
 		div {
 			a { "Cancel and return to dashboard" }
-				.href("/administrator")
+				.href("/admin")
 				.style { cancelLinkCSS() }
 		}
 		.style { footerCSS() }
@@ -163,22 +154,24 @@ public struct SetupMFAView: HTML {
 
 	@CSSBuilder
 	private func cardCSS() -> [CSS] {
-		backgroundColor(backgroundColorNeutralSubtle)
+		backgroundColor(backgroundColorBase)
+		border(borderWidthBase, borderStyleBase, borderColorBase)
 		borderRadius(borderRadiusBase)
 		padding(spacing48)
-		width(px(800))
+		width(px(540))
 		maxWidth(perc(100))
-		boxShadow(px(0), px(10), px(40), px(0), rgba(0, 0, 0, 0.15))
+		boxShadow(boxShadowLarge)
 	}
 
 	@CSSBuilder
 	private func titleCSS() -> [CSS] {
-		fontFamily(typographyFontSerif)
+		fontFamily(typographyFontSans)
 		fontSize(px(32))
-		fontWeight(.normal)
+		fontWeight(600)
 		color(colorBase)
 		textAlign(.center)
 		marginBottom(spacing8)
+		letterSpacing(px(-0.5))
 	}
 
 	@CSSBuilder
@@ -352,13 +345,8 @@ public class SetupMFAHydration: @unchecked Sendable {
 		let qrcodeElement = document.getElementById("qrcode")
 		guard let element = qrcodeElement else { return }
 
-		otpauthURL.withCString { pointer, len in
-			js_qrcode_generate(element.id, pointer, len, 200, 200)
-		}
+		QRCode(element, text: otpauthURL)
 	}
 }
-
-@_extern(wasm, module: "env", name: "qrcode_generate")
-fileprivate func js_qrcode_generate(_ elementId: Int32, _ textPointer: UnsafePointer<CChar>, _ textLen: Int32, _ width: Int32, _ height: Int32)
 
 #endif

@@ -6,8 +6,8 @@ import HTMLBuilder
 import WebComponents
 import WebTypes
 
-/// Login form component for administrator authentication.
-/// Use with WebAdministrator.LayoutView for the full page.
+/// Login form component for admin authentication.
+/// Use with WebAdmin.LayoutView for the full page.
 public struct LoginView: HTML {
 	let errorMessage: String?
 
@@ -19,7 +19,7 @@ public struct LoginView: HTML {
 		div {
 			div {
 				div {
-					h1 { "Administrator" }
+					h1 { "Admin" }
                     .style {
                         fontFamily(typographyFontSans)
                         fontSize(px(32))
@@ -101,7 +101,7 @@ public struct LoginView: HTML {
 						textAlign(.center)
 					}
 				}
-				.action("/administrator/login")
+				.action("/admin/login")
 				.method(.post)
 			}
 			.style {
@@ -114,7 +114,7 @@ public struct LoginView: HTML {
 				padding(spacing48)
 			}
 		}
-		.class("login-container")
+		.class("login-view")
 		.style {
 			display(.flex)
 			justifyContent(.center)

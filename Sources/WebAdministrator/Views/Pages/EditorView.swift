@@ -7,7 +7,7 @@ import WebComponents
 import WebTypes
 
 /// A generic editor view that dynamically build forms from FieldConfig
-public struct GenericEditorView: HTML {
+public struct EditorView: HTML {
     let admin: AnyModelAdmin
     let data: FormData
     let isNew: Bool
@@ -82,7 +82,7 @@ public struct GenericEditorView: HTML {
                     )
 
                     a { ButtonView(label: "Cancel", weight: .normal, size: .large) }
-                        .href("/administrator/\(admin.urlPath)")
+                        .href("/admin/\(admin.urlPath)")
                         .style {
                             textDecoration(.none)
                         }
@@ -94,7 +94,7 @@ public struct GenericEditorView: HTML {
                     borderTop(borderWidthBase, borderStyleBase, borderColorSubtle)
                 }
             }
-            .action(isNew ? "/administrator/\(admin.urlPath)" : "/administrator/\(admin.urlPath)/\(data.id ?? "")")
+            .action(isNew ? "/admin/\(admin.urlPath)" : "/admin/\(admin.urlPath)/\(data.id ?? "")")
             .method(.post)
             .style {
                 display(.flex)
@@ -102,7 +102,7 @@ public struct GenericEditorView: HTML {
                 gap(spacing24)
             }
         }
-        .class("generic-editor-view")
+        .class("editor-view")
         .style {
             maxWidth(px(1280))
             margin(0, .auto)
@@ -270,7 +270,7 @@ public struct GenericEditorView: HTML {
 import WebAPIs
 import EmbeddedSwiftUtilities
 
-public class GenericEditorViewHydration: @unchecked Sendable {
+public class EditorHydration: @unchecked Sendable {
     public init() {}
     public func hydrate() {}
 }

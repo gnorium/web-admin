@@ -6,13 +6,13 @@ import HTMLBuilder
 import WebComponents
 import WebTypes
 
-/// Navbar component for administrator pages.
+/// Navbar component for admin pages.
 /// Shows the site name, username, and logout link.
 public struct NavbarView: HTML {
 	let siteName: String
 	let username: String
 
-	public init(siteName: String = "Administrator", username: String) {
+	public init(siteName: String = "Admin", username: String) {
 		self.siteName = siteName
 		self.username = username
 	}
@@ -21,7 +21,7 @@ public struct NavbarView: HTML {
 		nav {
 			div {
 				a { siteName }
-                .href("/administrator")
+                .href("/admin")
                 .style {
                     fontFamily(typographyFontSans)
                     fontSize(fontSizeLarge18)
@@ -64,8 +64,8 @@ public struct NavbarView: HTML {
                     color(colorBase)
                 }
 
-				a { ButtonView(label: "Logout", weight: .quiet, size: .small) }
-                .href("/administrator/logout")
+				a { ButtonView(label: "Logout", weight: .quiet, size: .large) }
+                .href("/admin/logout")
                 .style {
                     textDecoration(.none)
                 }

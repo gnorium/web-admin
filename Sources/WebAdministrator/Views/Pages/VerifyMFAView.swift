@@ -7,7 +7,6 @@ import WebComponents
 import WebTypes
 
 /// MFA Verification View for login flow
-/// Uses modern DSL patterns: lowercase tags, inline styles, design tokens
 public struct VerifyMFAView: HTML {
 	public let username: String
 	public let error: String?
@@ -18,25 +17,16 @@ public struct VerifyMFAView: HTML {
 	}
 
 	public func render(indent: Int = 0) -> String {
-		html {
-			head {
-				title { "MFA Verification | Administration" }
-				meta().charset(.UTF8)
-				meta().name(.viewport).content("width=device-width, initial-scale=1")
+		LayoutView(siteName: "Verify MFA", username: username) {
+			div {
+				verificationCard
 			}
-			body {
-				div {
-					verificationCard
-				}
-				.class("mfa-container")
-				.style { containerCSS() }
-			}
+			.class("mfa-container")
 			.style {
-				margin(0)
-				padding(0)
-				backgroundColor(backgroundColorBase)
-				fontFamily(typographyFontSans)
-				color(colorBase)
+				display(.flex)
+				justifyContent(.center)
+				alignItems(.center)
+				padding(spacing32)
 			}
 		}
 		.render(indent: indent)
@@ -90,12 +80,12 @@ public struct VerifyMFAView: HTML {
 					.style { buttonCSS() }
 			}
 			.method(.post)
-			.action("/administrator/mfa/verify")
+			.action("/admin/mfa/verify")
 
 			// Footer
 			div {
 				a { "Back to login" }
-					.href("/administrator/login")
+					.href("/admin/login")
 					.style { backLinkCSS() }
 			}
 			.style { footerCSS() }
@@ -116,22 +106,24 @@ public struct VerifyMFAView: HTML {
 
 	@CSSBuilder
 	private func cardCSS() -> [CSS] {
-		backgroundColor(backgroundColorNeutralSubtle)
+		backgroundColor(backgroundColorBase)
+		border(borderWidthBase, borderStyleBase, borderColorBase)
 		borderRadius(borderRadiusBase)
 		padding(spacing48)
 		width(px(400))
 		maxWidth(perc(100))
-		boxShadow(px(0), px(4), px(20), px(0), rgba(0, 0, 0, 0.1))
+		boxShadow(boxShadowLarge)
 		textAlign(.center)
 	}
 
 	@CSSBuilder
 	private func titleCSS() -> [CSS] {
-		fontFamily(typographyFontSerif)
+		fontFamily(typographyFontSans)
 		fontSize(px(24))
-		fontWeight(.normal)
+		fontWeight(600)
 		color(colorBase)
 		marginBottom(spacing16)
+		letterSpacing(px(-0.5))
 	}
 
 	@CSSBuilder
@@ -248,8 +240,9 @@ public struct VerifyMFAView: HTML {
  
  	public func hydrate() {
  		// Focus the code input field automatically
- 		let codeInput = document.getElementById("code")
- 		_ = codeInput?.focus()
+ 		if let codeInput = document.getElementById("code") {
+ 			codeInput.focus()
+ 		}
  	}
  }
  

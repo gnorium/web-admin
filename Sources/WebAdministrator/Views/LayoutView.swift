@@ -6,7 +6,7 @@ import HTMLBuilder
 import WebComponents
 import WebTypes
 
-/// Shared layout for the administrator panel.
+/// Shared layout for the admin panel.
 /// Provides the Sidebar + Navbar + Content structure.
 public struct LayoutView: HTML {
     let siteName: String
@@ -14,7 +14,7 @@ public struct LayoutView: HTML {
     let content: HTML
 
     public init(
-        siteName: String = "Administrator",
+        siteName: String = "Admin",
         username: String,
         @HTMLBuilder content: () -> HTML
     ) {
@@ -50,7 +50,7 @@ public struct LayoutView: HTML {
 
                         footer {
                             BreadcrumbView(items: [
-                                .init(text: "Home", url: "/administrator"),
+                                .init(text: "Home", url: "/admin"),
                                 .init(text: "Dashboard")
                             ])
                         }

@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "web-administrator",
+    name: "web-admin",
     platforms: [.macOS(.v15), .iOS(.v18)],
     products: [
         .library(
-            name: "WebAdministrator",
-            targets: ["WebAdministrator"]
+            name: "WebAdmin",
+            targets: ["WebAdmin"]
         )
     ],
     dependencies: [
@@ -20,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WebAdministrator",
+            name: "WebAdmin",
             dependencies: [
                 .product(name: "CSSBuilder", package: "web-builders"),
                 .product(name: "DesignTokens", package: "design-tokens"),
@@ -31,7 +31,7 @@ let package = Package(
                 .product(name: "WebComponents", package: "web-components"),
                 .product(name: "WebTypes", package: "web-types")
             ],
-            path: "Sources/WebAdministrator"
+            path: "Sources/WebAdmin"
         )
     ]
 )

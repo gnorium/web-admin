@@ -18,7 +18,7 @@ public struct RegisterView: HTML {
     public func render(indent: Int = 0) -> String {
         div {
             div {
-                h1 { "Create Administrator Account" }
+                h1 { "Create Admin Account" }
                     .style {
                         fontSize(fontSizeXXLarge24)
                         marginBottom(spacing32)
@@ -72,7 +72,7 @@ public struct RegisterView: HTML {
 
                     ButtonView(label: "Complete Registration", action: .progressive, weight: .primary, type: .submit, fullWidth: true)
                 }
-                .action("/administrator/register/\(token)")
+                .action("/admin/register/\(token)")
                 .method(.post)
             }
             .style {

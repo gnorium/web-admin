@@ -1,10 +1,10 @@
-# WebAdministrator, as used in [gnorium.com](https://gnorium.com)
+# WebAdmin, as used in [gnorium.com](https://gnorium.com)
 
 Web administration panel for Swift-based web applications.
 
 ## Overview
 
-WebAdministrator provides a structured, type-safe API for defining and rendering administrative interfaces in Swift. It allows developers to register models using the `ModelAdmin` protocol and automatically generates dashboards, forms, and editors.
+WebAdmin provides a structured, type-safe API for defining and rendering administrative interfaces in Swift. It allows developers to register models using the `ModelAdmin` protocol and automatically generates dashboards, forms, and editors.
 
 ## Features
 
@@ -17,11 +17,11 @@ WebAdministrator provides a structured, type-safe API for defining and rendering
 
 ### Swift Package Manager
 
-Add WebAdministrator to your `Package.swift`:
+Add WebAdmin to your `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/gnorium/web-administrator", branch: "main")
+    .package(url: "https://github.com/gnorium/web-admin", branch: "main")
 ]
 ```
 
@@ -31,7 +31,7 @@ Then add it to your target dependencies:
 .target(
     name: "YourTarget",
     dependencies: [
-        .product(name: "WebAdministrator", package: "web-administrator")
+        .product(name: "WebAdmin", package: "web-admin")
     ]
 )
 ```
@@ -39,7 +39,7 @@ Then add it to your target dependencies:
 ## Usage
 
 ```swift
-import WebAdministrator
+import WebAdmin
 
 struct ArticleAdmin: ModelAdmin {
     let modelName = "Article"

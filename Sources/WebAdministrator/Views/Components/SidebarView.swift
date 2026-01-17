@@ -16,31 +16,31 @@ public struct SidebarView: HTML {
                     ul {
                         li {
                             a { "Dashboard" }
-                                .href("/administrator")
+                                .href("/admin")
                                 .class("sidebar-link")
                                 .style { sidebarLinkStyle() }
                         }
                         li {
                             a { "Articles" }
-                                .href("/administrator/articles")
+                                .href("/admin/articles")
                                 .class("sidebar-link")
                                 .style { sidebarLinkStyle() }
                         }
                         li {
                             a { "Invites" }
-                                .href("/administrator/invites")
+                                .href("/admin/invites")
                                 .class("sidebar-link")
                                 .style { sidebarLinkStyle() }
                         }
                          li {
                             a { "Users" }
-                                .href("/administrator/users")
+                                .href("/admin/users")
                                 .class("sidebar-link")
                                 .style { sidebarLinkStyle() }
                         }
                         li {
                             a { "Account Security" }
-                                .href("/administrator/mfa/setup")
+                                .href("/admin/mfa/setup")
                                 .class("sidebar-link")
                                 .style { sidebarLinkStyle() }
                         }
