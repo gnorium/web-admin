@@ -65,7 +65,6 @@ public struct LayoutView: HTML {
                         display(.flex)
                         flexDirection(.column)
                         minHeight(vh(100))
-                        marginLeft(px(260)) // Offset for sidebar
                     }
                 }
                 .style {

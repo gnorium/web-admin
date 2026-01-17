@@ -32,9 +32,15 @@ public struct SidebarView: HTML {
                                 .class("sidebar-link")
                                 .style { sidebarLinkStyle() }
                         }
-                        li {
+                         li {
                             a { "Users" }
                                 .href("/administrator/users")
+                                .class("sidebar-link")
+                                .style { sidebarLinkStyle() }
+                        }
+                        li {
+                            a { "Account Security" }
+                                .href("/administrator/mfa/setup")
                                 .class("sidebar-link")
                                 .style { sidebarLinkStyle() }
                         }
@@ -81,8 +87,9 @@ public struct SidebarView: HTML {
         .class("sidebar-view")
         .style {
             width(px(260))
+            minWidth(px(260))
             height(vh(100))
-            position(.fixed)
+            position(.sticky)
             top(0)
             left(0)
             backgroundColor(backgroundColorBase)
@@ -91,6 +98,7 @@ public struct SidebarView: HTML {
             flexDirection(.column)
             zIndex(zIndexBase)
             paddingTop(px(64)) // Height of navbar
+            overflow(.auto)
         }
         .render(indent: indent)
     }
