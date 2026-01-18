@@ -84,11 +84,6 @@ public struct NavbarView: HTML {
 			justifyContent(.spaceBetween)
 			alignItems(.center)
 			borderBottom(borderWidthBase, borderStyleBase, borderColorSubtle)
-			position(.fixed)
-			top(0)
-			left(px(260)) // Offset for sidebar
-			right(0)
-			zIndex(zIndexSticky)
 		}
 		.render(indent: indent)
 	}

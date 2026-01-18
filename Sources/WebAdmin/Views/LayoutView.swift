@@ -24,62 +24,53 @@ public struct LayoutView: HTML {
     }
 
     public func render(indent: Int = 0) -> String {
-        html {
-            head {
-                title { "\(siteName) | Administration" }
-                meta().charset(.UTF8)
-                meta().name(.viewport).content("width=device-width, initial-scale=1")
-            }
-            body {
+        div {
+            ContainerView(size: .xLarge) {
                 div {
-                    SidebarView()
+                    NavbarView(siteName: siteName, username: username)
+                    
                     div {
-                        NavbarView(siteName: siteName, username: username)
-
+                        SidebarView()
+                        
                         main {
-                            ContainerView(size: .xLarge) {
-                                content
-                            }
+                            content
                         }
                         .style {
                             flex(1)
                             overflow(.auto)
                             padding(spacing32)
-                            marginTop(px(64)) // Offset for fixed navbar
-                        }
-
-                        footer {
-                            BreadcrumbView(items: [
-                                .init(text: "Home", url: "/admin"),
-                                .init(text: "Dashboard")
-                            ])
-                        }
-                        .style {
-                            padding(spacing16, spacing32)
-                            backgroundColor(backgroundColorBase)
-                            borderTop(borderWidthBase, borderStyleBase, borderColorSubtle)
                         }
                     }
                     .style {
-                        flex(1)
                         display(.flex)
-                        flexDirection(.column)
-                        minHeight(vh(100))
+                        flex(1)
+                    }
+                    
+                    footer {
+                        BreadcrumbView(items: [
+                            .init(text: "Home", url: "/admin"),
+                            .init(text: "Dashboard")
+                        ])
+                    }
+                    .style {
+                        padding(spacing16, spacing32)
+                        backgroundColor(backgroundColorBase)
+                        borderTop(borderWidthBase, borderStyleBase, borderColorSubtle)
                     }
                 }
                 .style {
                     display(.flex)
+                    flexDirection(.column)
                     minHeight(vh(100))
                     backgroundColor(backgroundColorBase)
-                    color(colorBase)
-                    fontFamily(typographyFontSans)
                 }
             }
-            .style {
-                margin(0)
-                padding(0)
-                backgroundColor(backgroundColorNeutralSubtle)
-            }
+        }
+        .style {
+            backgroundColor(backgroundColorBase)
+            color(colorBase)
+            fontFamily(typographyFontSans)
+            minHeight(vh(100))
         }
         .render(indent: indent)
     }

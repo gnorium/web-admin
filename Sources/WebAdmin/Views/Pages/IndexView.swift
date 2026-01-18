@@ -105,7 +105,7 @@ public class IndexHydration: @unchecked Sendable {
     }
 
     public func hydrate() {
-        guard document.querySelector(".index-view") != nil else { return }
+        guard let indexRoot = document.querySelector(".index-view") else { return }
         
         // Get URL path from data attribute or infer from location
         let path = window.location.pathname
@@ -119,19 +119,9 @@ public class IndexHydration: @unchecked Sendable {
         editBtn = document.querySelector(".bulk-edit-btn")
         deleteBtn = document.querySelector(".bulk-delete-btn")
 
-        // Listen for checkbox changes to update button states
-        let checkboxes = document.querySelectorAll("[name='row-selection']")
-        for checkbox in checkboxes {
-            _ = checkbox.addEventListener(.change) { _ in
-                self.updateButtonStates()
-            }
-        }
-
-        // Listen for select-all changes
-        if let selectAll = document.querySelector("#select-all") {
-            _ = selectAll.addEventListener(.change) { _ in
-                self.updateButtonStates()
-            }
+        // Listen for selection changes from the TableView (dispatched as CustomEvent)
+        _ = indexRoot.addEventListener("table-selection-change") { _ in
+            self.updateButtonStates()
         }
 
         _ = editBtn?.addEventListener(.click) { _ in

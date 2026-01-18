@@ -96,8 +96,6 @@ public struct SidebarView: HTML {
             borderRight(borderWidthBase, borderStyleBase, borderColorSubtle)
             display(.flex)
             flexDirection(.column)
-            zIndex(zIndexBase)
-            paddingTop(px(64)) // Height of navbar
             overflow(.auto)
         }
         .render(indent: indent)
