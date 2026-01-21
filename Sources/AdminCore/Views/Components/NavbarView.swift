@@ -7,12 +7,14 @@ import WebComponents
 import WebTypes
 
 /// Navbar component for admin pages.
-/// Shows the site name, username, and logout link.
+/// Shows the site name, username, and sign out link.
+private let baseRoute = Configuration.shared.baseRoute
+
 public struct NavbarView: HTML {
 	let siteName: String
 	let username: String
 
-	public init(siteName: String = "Admin", username: String) {
+	public init(siteName: String = "Admin Console", username: String) {
 		self.siteName = siteName
 		self.username = username
 	}
@@ -21,7 +23,7 @@ public struct NavbarView: HTML {
 		nav {
 			div {
 				a { siteName }
-                .href("/admin")
+                .href(baseRoute)
                 .style {
                     fontFamily(typographyFontSans)
                     fontSize(fontSizeLarge18)
@@ -40,39 +42,41 @@ public struct NavbarView: HTML {
 			div {
                 // Theme Toggles
                 div {
-                    ColorSchemeToggleView()
-                    ContrastToggleView()
+                    ColorSchemeToggleButtonView()
+                    ContrastToggleButtonView()
                 }
                 .style {
                     display(.flex)
                     alignItems(.center)
                     gap(spacing16)
-                    marginRight(spacing24)
                     paddingRight(spacing24)
                     borderRight(borderWidthBase, borderStyleBase, borderColorSubtle)
                 }
 
-				span { "Welcome, " }
-                .style {
-                    fontSize(fontSizeSmall14)
-                    color(colorSubtle)
+                div {
+                    span { "Welcome, " }
+                    .style {
+                        fontSize(fontSizeSmall14)
+                        color(colorSubtle)
+                    }
+                    span { username }
+                    .style {
+                        fontSize(fontSizeSmall14)
+                        fontWeight(600)
+                        color(colorBase)
+                    }
                 }
-				span { username }
                 .style {
-                    fontSize(fontSizeSmall14)
-                    fontWeight(600)
-                    color(colorBase)
+                    display(.flex)
+                    alignItems(.center)
+                    gap(spacing4)
                 }
 
-				a { ButtonView(label: "Logout", weight: .quiet, size: .large) }
-                .href("/admin/logout")
-                .style {
-                    textDecoration(.none)
-                }
+				ButtonView(label: "Sign Out", weight: .quiet, size: .large, url: "\(baseRoute)/sign-out")
 			}
 			.style {
 				display(.flex)
-				gap(spacing8)
+				gap(spacing24)
 				alignItems(.center)
 			}
 		}

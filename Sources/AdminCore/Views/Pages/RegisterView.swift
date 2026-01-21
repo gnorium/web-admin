@@ -77,19 +77,18 @@ public struct RegisterView: HTML {
             }
             .style {
                 width(perc(100))
-                maxWidth(px(400))
+                maxWidth(px(480))
                 padding(spacing48)
                 backgroundColor(backgroundColorBase)
                 borderRadius(borderRadiusBase)
                 boxShadow(boxShadowLarge)
             }
         }
-        .class("register-container")
+        .class("register-view")
         .style {
             display(.flex)
             justifyContent(.center)
             alignItems(.center)
-            minHeight(vh(100))
             backgroundColor(backgroundColorNeutralSubtle)
             fontFamily(typographyFontSans)
         }

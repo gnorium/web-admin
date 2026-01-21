@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "web-admin",
+    name: "admin-core",
     platforms: [.macOS(.v15), .iOS(.v18)],
     products: [
         .library(
-            name: "WebAdmin",
-            targets: ["WebAdmin"]
+            name: "AdminCore",
+            targets: ["AdminCore"]
         )
     ],
     dependencies: [
@@ -20,7 +20,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WebAdmin",
+            name: "AdminCore",
             dependencies: [
                 .product(name: "CSSBuilder", package: "web-builders"),
                 .product(name: "DesignTokens", package: "design-tokens"),
@@ -31,7 +31,7 @@ let package = Package(
                 .product(name: "WebComponents", package: "web-components"),
                 .product(name: "WebTypes", package: "web-types")
             ],
-            path: "Sources/WebAdmin"
+            path: "Sources/AdminCore"
         )
     ]
 )

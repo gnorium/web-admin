@@ -6,9 +6,11 @@ import HTMLBuilder
 import WebComponents
 import WebTypes
 
-/// Login form component for admin authentication.
-/// Use with WebAdmin.LayoutView for the full page.
-public struct LoginView: HTML {
+private let baseRoute = Configuration.shared.baseRoute
+
+/// Sign in form component for admin authentication.
+/// Use with AdminCore.LayoutView for the full page.
+public struct SignInView: HTML {
 	let errorMessage: String?
 
 	public init(errorMessage: String? = nil) {
@@ -19,14 +21,13 @@ public struct LoginView: HTML {
 		div {
 			div {
 				div {
-					h1 { "Admin" }
+					h1 { "Sign In" }
                     .style {
                         fontFamily(typographyFontSans)
-                        fontSize(px(32))
-                        fontWeight(600)
+                        fontSize(fontSizeXXXLarge28)
+                        fontWeight(fontWeightNormal)
                         color(colorBase)
-                        marginBottom(spacing8)
-                        letterSpacing(px(-0.5))
+                        margin(0)
                     }
 
 					p { "Sign in to manage content" }
@@ -34,25 +35,32 @@ public struct LoginView: HTML {
                         fontFamily(typographyFontSans)
                         fontSize(fontSizeSmall14)
                         color(colorSubtle)
-                        letterSpacing(px(0.2))
+                        margin(0)
                     }
 				}
 				.style {
+					display(.flex)
+					flexDirection(.column)
+					gap(spacing12)
 					textAlign(.center)
-					marginBottom(spacing32)
 				}
 
-				if let error = errorMessage {
-					div { error }
-                    .style {
-                        backgroundColor(backgroundColorErrorSubtle)
-                        color(colorError)
-                        padding(spacing12, spacing16)
-                        borderRadius(borderRadiusBase)
-                        marginBottom(spacing24)
-                        fontSize(fontSizeSmall14)
-                        fontWeight(500)
-                    }
+				if let error = errorMessage, !error.isEmpty {
+					div {
+						p { error }
+						.style {
+							margin(0)
+							fontSize(fontSizeSmall14)
+							color(colorError)
+						}
+					}
+					.class("error-banner")
+					.style {
+						backgroundColor(backgroundColorErrorSubtle)
+						border(borderWidthBase, .solid, borderColorError)
+						borderRadius(borderRadiusBase)
+						padding(spacing12, spacing16)
+					}
 				}
 
 				form {
@@ -63,9 +71,6 @@ public struct LoginView: HTML {
                             TextInputView(id: "username", name: "username", placeholder: "Enter your username", required: true)
                         }
 					}
-					.style {
-						marginBottom(spacing24)
-					}
 
 					div {
                         FieldView(id: "password") {
@@ -73,9 +78,6 @@ public struct LoginView: HTML {
                         } input: {
                             TextInputView(id: "password", name: "password", placeholder: "Enter your password", type: .password, required: true)
                         }
-					}
-					.style {
-						marginBottom(spacing32)
 					}
 
 					ButtonView(label: "Sign In", action: .progressive, weight: .primary, size: .large, type: .submit, fullWidth: true)
@@ -85,7 +87,6 @@ public struct LoginView: HTML {
                             .href("/")
                             .style {
                                 display(.inlineBlock)
-                                marginTop(spacing24)
                                 fontSize(fontSizeSmall14)
                                 color(colorSubtle)
                                 textDecoration(.none)
@@ -101,27 +102,31 @@ public struct LoginView: HTML {
 						textAlign(.center)
 					}
 				}
-				.action("/admin/login")
+				.action("\(baseRoute)/sign-in")
 				.method(.post)
+				.style {
+					display(.flex)
+					flexDirection(.column)
+					gap(spacing24)
+				}
 			}
 			.style {
+				display(.flex)
+				flexDirection(.column)
+				gap(spacing32)
 				width(perc(100))
-				maxWidth(px(400))
+				maxWidth(px(480))
 				backgroundColor(backgroundColorBase)
-				border(borderWidthBase, borderStyleBase, borderColorBase)
-				borderRadius(borderRadiusBase) // More modern look with standard radius
-				boxShadow(boxShadowLarge)
-				padding(spacing48)
+				border(borderWidthBase, borderStyleBase, borderColorSubtle)
+				borderRadius(borderRadiusBase)
+				padding(spacing40)
 			}
 		}
-		.class("login-view")
+		.class("sign-in-view")
 		.style {
 			display(.flex)
 			justifyContent(.center)
 			alignItems(.center)
-			minHeight(vh(100))
-			padding(spacing16)
-			backgroundColor(backgroundColorNeutralSubtle)
 		}
 		.render(indent: indent)
 	}
