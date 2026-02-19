@@ -68,7 +68,7 @@ public struct SignInView: HTMLProtocol {
                         FieldView(id: "username") {
                             "Username"
                         } input: {
-                            TextInputView(id: "username", name: "username", placeholder: "Enter your username", required: true)
+                            TextInputView(id: "username", name: "username", placeholder: "Username", required: true)
                         }
 					}
 
@@ -76,7 +76,7 @@ public struct SignInView: HTMLProtocol {
                         FieldView(id: "password") {
                             "Password"
                         } input: {
-                            TextInputView(id: "password", name: "password", placeholder: "Enter your password", type: .password, required: true)
+                            TextInputView(id: "password", name: "password", placeholder: "Password", type: .password, required: true)
                         }
 					}
 

@@ -47,7 +47,7 @@ public struct RegisterView: HTMLProtocol {
                         FieldView(id: "username") {
                             "Username"
                         } input: {
-                            TextInputView(id: "username", name: "username", placeholder: "Enter your username", required: true)
+                            TextInputView(id: "username", name: "username", placeholder: "Username", required: true)
                         }
                     }
                     .style { marginBottom(spacing24) }
@@ -56,7 +56,7 @@ public struct RegisterView: HTMLProtocol {
                         FieldView(id: "email") {
                             "Email Address"
                         } input: {
-                            TextInputView(id: "email", name: "email", placeholder: "Enter your email", type: .email, required: true)
+                            TextInputView(id: "email", name: "email", placeholder: "Email address", type: .email, required: true)
                         }
                     }
                     .style { marginBottom(spacing24) }
