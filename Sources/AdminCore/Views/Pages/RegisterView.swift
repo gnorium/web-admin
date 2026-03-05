@@ -6,6 +6,8 @@ import HTMLBuilder
 import WebComponents
 import WebTypes
 
+private let baseRoute = Configuration.shared.baseRoute
+
 public struct RegisterView: HTMLProtocol {
     let token: String
     let errorMessage: String?
@@ -72,7 +74,7 @@ public struct RegisterView: HTMLProtocol {
 
                     ButtonView(label: "Complete Registration", buttonColor: .blue, weight: .solid, type: .submit, fullWidth: true)
                 }
-                .action("/admin/register/\(token)")
+                .action("\(baseRoute)/register/\(token)")
                 .method(.post)
             }
             .style {

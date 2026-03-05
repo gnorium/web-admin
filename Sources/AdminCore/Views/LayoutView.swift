@@ -62,18 +62,25 @@ public struct LayoutView: HTMLProtocol {
                 .style {
                     flex(1)
                     overflow(.auto)
+                    minWidth(0)
+                    padding(spacing32, spacing32, spacing32, spacing48)
+                    boxSizing(.borderBox)
                 }
             }
             .style {
                 display(.flex)
                 flexDirection(.column)
                 flex(1)
+                minWidth(0)
             }
         }
         .style {
             display(.flex)
             flexDirection(.row)
             minHeight(perc(100))
+            width(perc(100))
+            overflow(.hidden)
+            fontFamily(typographyFontSans)
         }
         .render(indent: indent)
     }

@@ -27,6 +27,8 @@ public struct SidebarView: HTMLProtocol {
     public init(items: [SidebarItem]? = nil, bottomItems: [SidebarItem]? = nil) {
         self.items = items ?? [
             SidebarItem(label: "Dashboard", url: baseRoute),
+            SidebarItem(label: "Users", url: "\(baseRoute)/users"),
+            SidebarItem(label: "Database", url: "\(baseRoute)/database"),
             SidebarItem(label: "Invites", url: "\(baseRoute)/invites"),
             SidebarItem(label: "Security", url: "\(baseRoute)/mfa/setup")
         ]

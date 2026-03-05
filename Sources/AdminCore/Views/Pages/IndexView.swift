@@ -6,6 +6,8 @@ import HTMLBuilder
 import WebComponents
 import WebTypes
 
+private let baseRoute = Configuration.shared.baseRoute
+
 /// Admin index view for listing model records with selection and bulk actions.
 /// Uses TableView with row selection for consistent component usage.
 public struct IndexView: HTMLProtocol {
@@ -41,17 +43,19 @@ public struct IndexView: HTMLProtocol {
             div {
                 div {
                     // Bulk action buttons
-                    ButtonView(label: "Edit", weight: .quiet, size: .large, disabled: true, class: "bulk-edit-btn")
+                    ButtonView(label: "Edit", buttonColor: .gray, weight: .subtle, size: .large, disabled: true, class: "bulk-edit-btn")
                     
-                    ButtonView(label: "Delete", buttonColor: .red, weight: .quiet, size: .large, disabled: true, class: "bulk-delete-btn")
+                    ButtonView(label: "Delete", buttonColor: .gray, weight: .subtle, size: .large, disabled: true, class: "bulk-delete-btn")
 
                     a {
                         ButtonView(label: "Add \(admin.modelName)", buttonColor: .blue, weight: .solid, size: .large)
                     }
-                    .href("/admin/\(admin.urlPath)/new")
+                    .href("\(baseRoute)/\(admin.urlPath)/new")
                     .style { textDecoration(.none) }
                 }
                 .class("index-actions")
+                .data("base-route", baseRoute)
+                .data("url-path", admin.urlPath)
                 .style {
                     display(.flex)
                     gap(spacing8)
@@ -73,15 +77,15 @@ public struct IndexView: HTMLProtocol {
         } footer: {
         } emptyState: {
             div { "No \(admin.modelNamePlural.lowercased()) found" }
-                .style {
-                    fontSize(fontSizeLarge18)
-                    fontWeight(600)
-                    marginBottom(spacing8)
-                }
+            .style {
+                fontSize(fontSizeLarge18)
+                fontWeight(600)
+                marginBottom(spacing8)
+            }
             div { "Click 'Add \(admin.modelName)' above to create one" }
-                .style {
-                    color(colorSubtle)
-                }
+            .style {
+                color(colorSubtle)
+            }
         }
         .render(indent: indent)
     }
@@ -98,6 +102,7 @@ import EmbeddedSwiftUtilities
 public class IndexHydration: @unchecked Sendable {
     private var editBtn: Element?
     private var deleteBtn: Element?
+    private var baseRoute: String = ""
     private var urlPath: String = ""
 
     public init() {
@@ -107,13 +112,10 @@ public class IndexHydration: @unchecked Sendable {
     public func hydrate() {
         guard let indexRoot = document.querySelector(".index-view") else { return }
         
-        // Get URL path from data attribute or infer from location
-        let path = window.location.pathname
-        if stringStartsWith(path, "/admin/") {
-            let parts = stringSplit(path, separator: "/")
-            if parts.count >= 2 {
-                urlPath = parts[1]
-            }
+        // Read baseRoute and urlPath from server-rendered data attributes on .index-actions
+        if let actions = document.querySelector(".index-actions") {
+            baseRoute = actions.getAttribute("data-base-route") ?? "/admin-console"
+            urlPath = actions.getAttribute("data-url-path") ?? ""
         }
 
         editBtn = document.querySelector(".bulk-edit-btn")
@@ -153,7 +155,7 @@ public class IndexHydration: @unchecked Sendable {
     private func handleBulkEdit() {
         let ids = getSelectedIds()
         guard let firstId = ids.first else { return }
-        window.location.href = "/admin/\(urlPath)/\(firstId)/edit"
+        window.location.href = "\(baseRoute)/\(urlPath)/\(firstId)/edit"
     }
 
     private func handleBulkDelete() {
@@ -166,7 +168,7 @@ public class IndexHydration: @unchecked Sendable {
         let confirmed = window.confirm(message)
         if confirmed {
             let idsParam = stringJoin(ids, separator: ",")
-            window.location.href = "/admin/\(urlPath)/delete?ids=\(idsParam)"
+            window.location.href = "\(baseRoute)/\(urlPath)/delete?ids=\(idsParam)"
         }
     }
 }

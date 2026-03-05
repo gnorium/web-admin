@@ -20,74 +20,96 @@ public struct NavbarView: HTMLProtocol {
 	}
 
 	public func render(indent: Int = 0) -> String {
-		nav {
-			div {
-				a { siteName }
-                .href(baseRoute)
-                .style {
-                    fontFamily(typographyFontSans)
-                    fontSize(fontSizeLarge18)
-                    fontWeight(700)
-                    color(colorBase)
-                    textDecoration(.none)
-                    letterSpacing(px(0.5))
-                    textTransform(.uppercase)
-                }
+		div {
+			nav {
+				div {
+					a { siteName }
+					.href(baseRoute)
+					.style {
+						fontFamily(typographyFontSans)
+						fontSize(fontSizeLarge18)
+						fontWeight(700)
+						color(colorBase)
+						textDecoration(.none)
+						letterSpacing(px(0.5))
+						textTransform(.uppercase)
+					}
+				}
+				.style {
+					display(.flex)
+					alignItems(.center)
+				}
+
+				div {
+					div {
+						span { "Welcome, " }
+						.style {
+							fontSize(fontSizeSmall14)
+							color(colorSubtle)
+						}
+						span { username }
+						.style {
+							fontSize(fontSizeSmall14)
+							fontWeight(600)
+							color(colorBase)
+						}
+					}
+					.style {
+						display(.flex)
+						alignItems(.center)
+						gap(spacing4)
+					}
+
+					// Ellipsis settings button
+					EllipsisMenuButtonView()
+
+					ButtonView(label: "Sign Out", weight: .quiet, size: .large, url: "\(baseRoute)/sign-out")
+				}
+				.style {
+					display(.flex)
+					gap(spacing16)
+					alignItems(.center)
+				}
 			}
+			.class("navbar-view")
 			.style {
+				backgroundColor(backgroundColorBase)
+				padding(spacing16, spacing32)
 				display(.flex)
+				justifyContent(.spaceBetween)
 				alignItems(.center)
+				borderBottom(borderWidthBase, borderStyleBase, borderColorSubtle)
 			}
 
-			div {
-                // Theme Settings
-                div {
-                    ColorSchemeButtonGroupView()
-                    ContrastButtonGroupView()
-                }
-                .style {
-                    display(.flex)
-                    flexDirection(.column)
-                    gap(spacing8)
-                    paddingRight(spacing24)
-                    borderRight(borderWidthBase, borderStyleBase, borderColorSubtle)
-                }
+			// Ellipsis overlay menu
+			EllipsisMenuView {
+				// Color Scheme
+				div {
+					span { "Color Scheme" }
+					.class("ellipsis-section-header")
+					.style { EllipsisMenuView.sectionHeaderCSS() }
 
-                div {
-                    span { "Welcome, " }
-                    .style {
-                        fontSize(fontSizeSmall14)
-                        color(colorSubtle)
-                    }
-                    span { username }
-                    .style {
-                        fontSize(fontSizeSmall14)
-                        fontWeight(600)
-                        color(colorBase)
-                    }
-                }
-                .style {
-                    display(.flex)
-                    alignItems(.center)
-                    gap(spacing4)
-                }
+					ColorSchemeButtonGroupView()
+				}
+				.class("ellipsis-section")
+				.style { EllipsisMenuView.sectionCSS() }
 
-				ButtonView(label: "Sign Out", weight: .quiet, size: .large, url: "\(baseRoute)/sign-out")
-			}
-			.style {
-				display(.flex)
-				gap(spacing24)
-				alignItems(.center)
+				// Contrast
+				div {
+					span { "Contrast" }
+					.class("ellipsis-section-header")
+					.style { EllipsisMenuView.sectionHeaderCSS() }
+
+					ContrastButtonGroupView()
+				}
+				.class("ellipsis-section")
+				.style { EllipsisMenuView.sectionCSS() }
 			}
 		}
-		.class("navbar-view")
+		.class("navbar-wrapper")
 		.style {
-			backgroundColor(backgroundColorBase)
-			padding(spacing16, spacing32)
 			display(.flex)
-			justifyContent(.spaceBetween)
-			alignItems(.center)
-			borderBottom(borderWidthBase, borderStyleBase, borderColorSubtle)
+			flexDirection(.column)
 		}
 		.render(indent: indent)
 	}

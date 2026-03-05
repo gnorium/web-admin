@@ -6,6 +6,8 @@ import HTMLBuilder
 import WebComponents
 import WebTypes
 
+private let baseRoute = Configuration.shared.baseRoute
+
 /// A generic editor view that dynamically build forms from FieldConfig
 public struct EditorView: HTMLProtocol {
     let admin: AnyModelAdminProtocol
@@ -82,7 +84,7 @@ public struct EditorView: HTMLProtocol {
                     )
 
                     a { ButtonView(label: "Cancel", weight: .subtle, size: .large) }
-                        .href("/admin/\(admin.urlPath)")
+                        .href("\(baseRoute)/\(admin.urlPath)")
                         .style {
                             textDecoration(.none)
                         }
@@ -94,7 +96,7 @@ public struct EditorView: HTMLProtocol {
                     borderTop(borderWidthBase, borderStyleBase, borderColorSubtle)
                 }
             }
-            .action(isNew ? "/admin/\(admin.urlPath)" : "/admin/\(admin.urlPath)/\(data.id ?? "")")
+            .action(isNew ? "\(baseRoute)/\(admin.urlPath)" : "\(baseRoute)/\(admin.urlPath)/\(data.id ?? "")")
             .method(.post)
             .style {
                 display(.flex)
