@@ -72,6 +72,7 @@ public struct LayoutView: HTMLProtocol {
                 flexDirection(.column)
                 flex(1)
                 minWidth(0)
+                borderInlineStart(borderWidthBase, .solid, borderColorSubtle)
             }
         }
         .style {

@@ -113,7 +113,6 @@ public struct SidebarView: HTMLProtocol {
                 top(0)
                 left(0)
                 backgroundColor(backgroundColorBase)
-                borderInlineEnd(borderWidthBase, .solid, borderColorSubtle)
                 overflowY(.auto)
             }
         }

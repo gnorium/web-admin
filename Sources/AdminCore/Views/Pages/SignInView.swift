@@ -128,7 +128,6 @@ public struct SignInView: HTMLProtocol {
 			justifyContent(.center)
 			alignItems(.center)
 			flex(1)
-			minHeight(vh(100))
 		}
 		.render(indent: indent)
 	}

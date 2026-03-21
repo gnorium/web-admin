@@ -183,7 +183,7 @@ public struct EditorView: HTMLProtocol {
                 .id(field.name)
                 .name(field.name)
                 .value(data.multiValues[field.name]?.joined(separator: ", ") ?? value)
-                .placeholder(field.placeholder ?? "Comma separated tags")
+                .placeholder(field.placeholder ?? "Tags")
                 .readonly(field.readOnly)
                 .style { formInputStyle() }
                 
@@ -209,7 +209,7 @@ public struct EditorView: HTMLProtocol {
                 .name(field.name)
                 .value(value)
                 .required(field.required)
-                .placeholder(field.placeholder ?? "slug-format")
+                .placeholder(field.placeholder ?? "slug")
                 .readonly(field.readOnly)
                 .style { formInputStyle() }
                 
